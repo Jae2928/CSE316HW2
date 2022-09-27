@@ -61,6 +61,7 @@ export default class SongCard extends React.Component {
     render() {
         const { song } = this.props;
         let num = this.getItemNum();
+        let url = "https://youtube.com/watch?v=" + song.youTubeId;
         console.log("num: " + num);
         let itemClass = "playlister-song";
         if (this.state.draggedTo) {
@@ -77,7 +78,7 @@ export default class SongCard extends React.Component {
                 onDrop={this.handleDrop}
                 draggable="true"
             >
-                {song.title} by {song.artist}
+                {num}. <a href={url} rel ="noreferrer">{song.title} by {song.artist}</a>
             </div>
         )
     }
