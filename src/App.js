@@ -31,7 +31,7 @@ class App extends React.Component {
 
         // GET THE SESSION DATA FROM OUR DATA MANAGER
         let loadedSessionData = this.db.queryGetSessionData();
-//dfsfadfsafdasfsdfs
+
         // SETUP THE INITIAL STATE
         this.state = {
             listKeyPairMarkedForDeletion : null,
@@ -235,6 +235,15 @@ class App extends React.Component {
         let transaction = new MoveSong_Transaction(this, start, end);
         this.tps.addTransaction(transaction);
     }
+    // Adds a song
+    addSong = () =>{
+        let json = '{"title": "Untitled", "artist": "Unknown", "youtubeId": "dQw4w9WgXcQ"}';
+        let obj = JSON.parse(json);
+        this.state.currentList.songs.push(obj);
+        this.setStateWithUpdatedList(this.state.currentList);
+
+    }
+
     // THIS FUNCTION BEGINS THE PROCESS OF PERFORMING AN UNDO
     undo = () => {
         if (this.tps.hasTransactionToUndo()) {
@@ -300,6 +309,7 @@ class App extends React.Component {
                     undoCallback={this.undo}
                     redoCallback={this.redo}
                     closeCallback={this.closeCurrentList}
+                    addSong={this.addSong}
                 />
                 <PlaylistCards
                     currentList={this.state.currentList}
