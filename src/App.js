@@ -10,6 +10,7 @@ import MoveSong_Transaction from './transactions/MoveSong_Transaction.js';
 
 // THESE REACT COMPONENTS ARE MODALS
 import DeleteListModal from './components/DeleteListModal.js';
+import EditSongInfoModal from './components/EditSongInfoModal.js';
 
 // THESE REACT COMPONENTS ARE IN OUR UI
 import Banner from './components/Banner.js';
@@ -283,6 +284,24 @@ class App extends React.Component {
         let modal = document.getElementById("delete-list-modal");
         modal.classList.remove("is-visible");
     }
+
+    showEditSongInfoModal = (keyToEdit) => {
+		this.setState(prevState => ({
+            listKeyPairMarkedForDeletion : null,
+			sessionData: prevState.sessionData,
+			currentList: prevState.currentList,
+			keyToEditSongInfo: keyToEdit
+          }), () => {});
+			
+        let modal = document.getElementById("edit-song-info-modal");
+        modal.classList.add("is-visible");
+    }
+
+    hideEditSongInfoModal() {
+        let modal = document.getElementById("edit-song-info-modal");
+        modal.classList.remove("is-visible");
+    }
+
     render() {
         let canAddSong = this.state.currentList !== null;
         let canUndo = this.tps.hasTransactionToUndo();
@@ -320,6 +339,12 @@ class App extends React.Component {
                     listKeyPair={this.state.listKeyPairMarkedForDeletion}
                     hideDeleteListModalCallback={this.hideDeleteListModal}
                     deleteListCallback={this.deleteMarkedList}
+                />
+                <EditSongInfoModal
+					app={this}
+					keyToEditSongInfo={this.state.keyToEditSongInfo}
+					currentList={this.state.currentList}
+                    hideEditSongInfoModalCallback={this.hideEditSongInfoModal}
                 />
             </div>
         );
