@@ -53,15 +53,26 @@ export default class SongCard extends React.Component {
         // ASK THE MODEL TO MOVE THE DATA
         this.props.moveCallback(sourceId, targetId);
     }
+    
+    handleDeleteSong = (event) => {
+        event.stopPropagation();
+        this.props.deleteSongCallback(this.props.keyNamePair);
+    }
+
+    handleClick = (event) =>{
+        if (event.detail === 2) {
+            this.props.showEditSongInfoModal(event.target.id);
+        }
+    }
 
     getItemNum = () => {
         return this.props.id.substring("playlist-song-".length);
     }
-
+    
     render() {
         const { song } = this.props;
         let num = this.getItemNum();
-        let url = "https://youtube.com/watch?v=" + song.youTubeId;
+        let url = "https://youtu.be/" + song.youTubeId;
         console.log("num: " + num);
         let itemClass = "playlister-song";
         if (this.state.draggedTo) {
@@ -76,6 +87,7 @@ export default class SongCard extends React.Component {
                 onDragEnter={this.handleDragEnter}
                 onDragLeave={this.handleDragLeave}
                 onDrop={this.handleDrop}
+                onClick={this.handleClick}
                 draggable="true"
             >
                 {num}. <a href={url} rel ="noreferrer">{song.title} by {song.artist}</a>

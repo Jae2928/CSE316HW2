@@ -350,6 +350,15 @@ span {
   transform: none;
 }
 
+.playlister-song, .playlister-song-dragged-to { 
+
+  font-size: 24pt;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 25px;
+  background-color: var(--swatch-complement);
+}
+
 @keyframes mixInAnimations {
   0% {
     transform: translateX(-100%);
